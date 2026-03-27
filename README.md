@@ -1,73 +1,92 @@
-# Enterprise AI Agents Platform (`enterprise-agents`)
+<div align="center">
 
-Production-ready multi-agent platform for **customer support automation**, **fraud triage workflows**, **marketing/ad insights analytics**, and **LLM evaluation operations**. Built around a unified API to support enterprise orchestration and observability.
+# 🤖 Enterprise Agents
 
-## Why This Repository
+### Support Agent • Fraud Triage • Ad Insights • LLMOps Evaluation
 
-Modern teams need AI agents that can reason over business context, trigger operational actions, and be measured continuously. `enterprise-agents` centralizes these concerns in one maintainable codebase.
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-FF6B6B?style=flat)](https://langchain-ai.github.io/langgraph/)
+[![LangChain](https://img.shields.io/badge/LangChain-0C4C97?style=flat&logo=langchain)](https://www.langchain.com/)
+[![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=prometheus)](https://prometheus.io/)
 
-## Core Features
+[Overview](#-overview) • [About](#-about) • [Topics](#-topics) • [API](#-api-surfaces) • [Quick Start](#-quick-start)
 
-- Support agent orchestration with chat and ticket workflows
-- Fraud triage endpoints for alert intake, review, and tracking
-- Insights agent endpoints for analysis, comparisons, and benchmarks
-- Evaluation module for datasets, model comparison, metrics, and reports
-- Unified FastAPI application for all agent surfaces
-- Core security/auth/rate-limit utilities in `src/core`
+---
 
-## Project Structure
+Multi-agent orchestration platform for enterprise workflows with **customer support automation**, **fraud investigation**, **marketing insights**, and **LLM quality evaluation** under a single API surface.
 
-- `src/api/`: unified API entrypoint and route modules
-- `src/agents/`: support, fraud, and insights agent surfaces
-- `src/evaluation/`: metrics, providers, and evaluation runners
-- `src/memory/`: conversation memory support
-- `src/monitoring/`: metrics and monitoring utilities
-- `src/core/`: shared production concerns (auth, security, errors)
+</div>
 
-## API Endpoints
+---
+
+## 🎯 Overview
+
+`enterprise-agents` unifies three agent products and one evaluation layer:
+
+- Support conversations with memory and ticketing
+- Fraud triage pipelines with risk decisions
+- Ad campaign analytics and benchmark comparisons
+- LLMOps evaluation, metrics, and report workflows
+
+## 📌 About
+
+- Single backend for operational AI agents and quality controls
+- Built for observability, structured routing, and modular expansion
+- Supports real-time and API-driven interaction patterns
+
+## 🏷️ Topics
+
+`enterprise-agents` `langgraph` `ai-agents` `fraud-detection` `customer-support-ai` `ad-analytics` `llmops` `evaluation` `fastapi`
+
+## 🧩 Architecture
+
+- `src/api/`: unified FastAPI app and routers
+- `src/agents/`: support, fraud, and insights agent modules
+- `src/evaluation/`: metrics, datasets, and eval runners
+- `src/memory/`: conversation memory management
+- `src/monitoring/`: observability instrumentation
+- `src/core/`: auth, security, rate limiting, errors, secrets
+
+## 🌐 API Surfaces
 
 - `POST /api/v1/agents/support/chat`
 - `POST /api/v1/agents/support/tickets`
 - `GET /api/v1/agents/support/tickets/{user_id}`
-- `GET /api/v1/agents/support/conversation/{id}`
 - `POST /api/v1/agents/fraud/alerts`
 - `GET /api/v1/agents/fraud/alerts/{id}`
-- `POST /api/v1/agents/fraud/alerts/{id}/review`
 - `POST /api/v1/agents/insights/analyze`
 - `GET /api/v1/agents/insights/quick-insights`
 - `POST /api/v1/eval/run`
 - `GET /api/v1/eval/metrics`
 - `GET /health`
 
-## Quick Start
+## ⚡ Quick Start
 
 ```bash
 pip install -r requirements.txt
 uvicorn src.api.main:app --reload
 ```
 
-## GLM Configuration
-
-Use the Anthropic-compatible GLM endpoint for support, fraud triage, and insights flows:
+## 🔧 GLM Setup
 
 ```bash
 export GLM_API_KEY=your_glm_api_key
 export GLM_BASE_URL=https://api.z.ai/api/anthropic
 export GLM_MODEL=glm-5.1
 
-# Support agent (ChatAnthropic path)
 export LLM_PROVIDER=anthropic
 export LLM_BASE_URL=https://api.z.ai/api/anthropic
 export LLM_MODEL_NAME=glm-5.1
 export OPENAI_API_KEY=$GLM_API_KEY
 
-# Fraud triage demo mode
 export ENVIRONMENT=demo
-
-# Insights agent key alias
 export ZHIPUAI_API_KEY=$GLM_API_KEY
 ```
 
-## SEO Keywords
+## 🛠️ Tech Stack
 
-enterprise ai agents, langgraph agents, fraud triage ai, customer support ai automation, llm evaluation platform, fastapi multi-agent api, ad insights agent
+**Core:** FastAPI, Pydantic, Uvicorn  
+**Agents:** LangGraph, LangChain  
+**Storage:** SQLite, ChromaDB  
+**Monitoring:** Prometheus, metrics pipelines
