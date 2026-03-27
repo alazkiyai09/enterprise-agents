@@ -811,6 +811,7 @@ class GLMProvider(LLMProvider):
     # BASE_URL = "https://open.bigmodel.cn/api/anthropic"
 
     PRICING: dict[str, dict[str, float]] = {
+        "glm-5.1": {"input": 0.0001, "output": 0.0001},
         "glm-4": {"input": 0.0001, "output": 0.0001},
         "glm-4-flash": {"input": 0.00001, "output": 0.00001},
         "glm-4-plus": {"input": 0.00005, "output": 0.00005},
@@ -824,7 +825,7 @@ class GLMProvider(LLMProvider):
 
     def __init__(
         self,
-        model: str = "glm-4-flash",
+        model: str = "glm-5.1",
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         timeout: int = 120,
@@ -834,7 +835,7 @@ class GLMProvider(LLMProvider):
         Initialize GLM provider.
 
         Args:
-            model: Model identifier (default: glm-4-flash)
+            model: Model identifier (default: glm-5.1)
             api_key: Zhipu AI API key
             base_url: Custom API base URL (optional)
                 - International: https://api.z.ai/api/anthropic

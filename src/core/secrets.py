@@ -9,7 +9,7 @@ support for different environments (dev, staging, prod), and centralized
 configuration for API keys, databases, Redis, Celery, and JWT settings.
 
 Example:
-    >>> from shared.secrets import get_settings, Settings
+    >>> from src.core.secrets import get_settings, Settings
     >>>
     >>> # Get the singleton settings instance
     >>> settings = get_settings()

@@ -1073,7 +1073,7 @@ if __name__ == "__main__":
 
     # Example: Create a Meta Ads client
     try:
-        from shared.secrets import get_settings
+        from src.core.secrets import get_settings
         settings = get_settings()
 
         # Create credentials from settings

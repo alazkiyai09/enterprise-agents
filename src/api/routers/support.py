@@ -80,12 +80,12 @@ async def get_tickets(user_id: str) -> dict[str, object]:
     return {"user_id": user_id, "count": len(tickets), "tickets": tickets}
 
 
-@router.get("/conversation/{user_id}")
-async def get_conversation(user_id: str) -> dict[str, object]:
+@router.get("/conversation/{id}")
+async def get_conversation(id: str) -> dict[str, object]:
     from src.agents.support.agent import get_support_agent
 
-    messages = get_support_agent().get_conversation_history(user_id)
-    return {"user_id": user_id, "count": len(messages), "messages": messages}
+    messages = get_support_agent().get_conversation_history(id)
+    return {"user_id": id, "count": len(messages), "messages": messages}
 
 
 @router.post("/feedback")

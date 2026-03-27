@@ -129,7 +129,7 @@ class AdInsightsAgent:
             # Try GLM (Zhipu AI) first
             zhipu_api_key = os.getenv("ZHIPUAI_API_KEY")
             if zhipu_api_key and zhipu_api_key != "sk-your-zhipuai-api-key-here":
-                model = os.getenv("GLM_MODEL", "glm-5")
+                model = os.getenv("GLM_MODEL", "glm-5.1")
                 self._llm = ChatZhipuAI(
                     model=model,
                     temperature=self.temperature,
@@ -936,4 +936,3 @@ if __name__ == "__main__":
     # Interactive mode option
     if len(sys.argv) > 1 and sys.argv[1] == "--interactive":
         agent.run_interactive()
-

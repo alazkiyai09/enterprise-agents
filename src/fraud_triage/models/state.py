@@ -543,7 +543,7 @@ class TriageResultResponse(BaseModel):
                 "processing_started": "2025-01-30T14:25:00Z",
                 "processing_completed": "2025-01-30T14:25:03Z",
                 "processing_duration_ms": 3240,
-                "model_used": "glm-4-plus"
+                "model_used": "glm-5.1"
             }
         }
     )

@@ -31,14 +31,14 @@ class Settings(BaseSettings):
     log_level: str = Field(default="info", description="Log level")
 
     # -------------------------------------------------------------------------
-    # GLM-4.7 Configuration (Primary LLM)
+    # GLM Configuration (Primary LLM)
     # -------------------------------------------------------------------------
     glm_api_key: str = Field(default="", description="GLM API key")
     glm_base_url: str = Field(
-        default="https://open.bigmodel.cn/api/paas/v4",
+        default="https://api.z.ai/api/anthropic",
         description="GLM API base URL"
     )
-    glm_model: str = Field(default="glm-4-plus", description="GLM model name")
+    glm_model: str = Field(default="glm-5.1", description="GLM model name")
     glm_temperature: float = Field(default=0.1, description="GLM temperature")
     glm_max_tokens: int = Field(default=4096, description="GLM max tokens")
 

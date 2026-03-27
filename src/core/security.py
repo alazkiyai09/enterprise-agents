@@ -8,7 +8,7 @@ This module provides functions to redact sensitive information from logs and err
 to prevent API key exposure in logs.
 
 Example:
-    >>> from shared.security import redact_sensitive_data
+    >>> from src.core.security import redact_sensitive_data
     >>> error_msg = "Failed with api_key=sk-abc123 for user@domain.com"
     >>> redact_sensitive_data(error_msg)
     "Failed with api_key=REDACTED for user@domain.com"
@@ -201,7 +201,7 @@ def install_security_filter(logger: logging.Logger) -> None:
         logger: Logger to install filter on
 
     Example:
-        >>> from shared.security import install_security_filter
+        >>> from src.core.security import install_security_filter
         >>> import logging
         >>> logger = logging.getLogger(__name__)
         >>> install_security_filter(logger)
@@ -221,7 +221,7 @@ def create_security_middleware():
         List of middleware for FastAPI app
 
     Example:
-        >>> from shared.security import create_security_middleware
+        >>> from src.core.security import create_security_middleware
         >>> from fastapi import FastAPI
         >>> app = FastAPI()
         >>> for middleware in create_security_middleware():

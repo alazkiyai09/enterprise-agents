@@ -8,7 +8,7 @@ This module provides rate limiting functionality for FastAPI applications
 to prevent DoS attacks and abuse.
 
 Example:
-    >>> from shared.rate_limit import limiter, get_rate_limit
+    >>> from src.core.rate_limit import limiter, get_rate_limit
     >>> from fastapi import FastAPI, Request
     >>>
     >>> app = FastAPI()

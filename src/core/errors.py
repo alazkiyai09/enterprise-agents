@@ -12,7 +12,7 @@ This module provides comprehensive error handling functionality including:
 - Error tracking integration helpers
 
 Example:
-    >>> from shared.errors import (
+    >>> from src.core.errors import (
     ...     AuthenticationError,
     ...     ValidationError,
     ...     ErrorResponse,
@@ -549,7 +549,7 @@ class DatabaseError(BaseAppError):
             error_code: Specific database error code
             request_id: Unique request identifier
         """
-        from shared.security import redact_sensitive_data
+        from src.core.security import redact_sensitive_data
 
         details: dict[str, Any] = {}
         if operation:
@@ -609,7 +609,7 @@ class ExternalAPIError(BaseAppError):
             error_code: Specific external API error code
             request_id: Unique request identifier
         """
-        from shared.security import redact_sensitive_data
+        from src.core.security import redact_sensitive_data
 
         details: dict[str, Any] = {}
         if service:
@@ -676,7 +676,7 @@ class ConfigurationError(BaseAppError):
             error_code: Specific configuration error code
             request_id: Unique request identifier
         """
-        from shared.security import redact_sensitive_data
+        from src.core.security import redact_sensitive_data
 
         details: dict[str, Any] = {}
         if config_key:
@@ -878,7 +878,7 @@ def log_error(
         ... except Exception as e:
         ...     log_error(e, context=ErrorContext(request_id="123"))
     """
-    from shared.security import redact_exception
+    from src.core.security import redact_exception
 
     log_level = getattr(logging, level.upper(), logging.ERROR)
     log_func = logger.log
@@ -970,7 +970,7 @@ def extract_error_context(request: Request) -> ErrorContext:
         ...     context = extract_error_context(request)
         ...     log_error(exc, context=context)
     """
-    from shared.security import redact_sensitive_data
+    from src.core.security import redact_sensitive_data
 
     # Get request ID from state or headers
     request_id = getattr(request.state, "request_id", None)
@@ -1021,7 +1021,7 @@ def create_error_response(
         ... except ValidationError as e:
         ...     return create_error_response(e, request)
     """
-    from shared.security import redact_exception
+    from src.core.security import redact_exception
 
     # Handle BaseAppError
     if isinstance(error, BaseAppError):

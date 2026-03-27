@@ -116,7 +116,7 @@ class TriageResult(BaseModel):
                 "human_decision": None,
                 "human_reasoning": None,
                 "analysis_duration_ms": 2340,
-                "model_used": "glm-4-plus",
+                "model_used": "glm-5.1",
                 "timestamp": "2025-01-30T12:34:56Z"
             }
         }

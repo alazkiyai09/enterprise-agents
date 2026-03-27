@@ -14,7 +14,7 @@ This module provides comprehensive authentication functionality including:
 - Password reset functionality
 
 Example:
-    >>> from shared.auth import (
+    >>> from src.core.auth import (
     ...     create_access_token,
     ...     verify_token,
     ...     get_current_user,

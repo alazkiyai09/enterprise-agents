@@ -81,7 +81,7 @@ def create_llm(
 
     Environments:
         - development: Uses Ollama (local, free, no API key needed)
-        - demo: Uses GLM-4.7 via OpenAI-compatible API
+        - demo: Uses GLM-5.1 via Anthropic-compatible API
         - production: Uses OpenAI GPT-4
 
     Args:
@@ -97,7 +97,7 @@ def create_llm(
     Examples:
         >>> llm = create_llm()  # Uses ENVIRONMENT variable
         >>> llm = create_llm(environment="development")  # Force Ollama
-        >>> llm = create_llm(environment="demo")  # Force GLM-4.7
+        >>> llm = create_llm(environment="demo")  # Force GLM-5.1
         >>> llm = create_llm(environment="production")  # Force OpenAI
     """
     env = environment or AgentConfig.ENVIRONMENT
@@ -118,7 +118,7 @@ def create_llm(
         )
 
     elif env == "demo":
-        # Use GLM-5 via Anthropic-compatible API
+        # Use GLM via Anthropic-compatible API
         api_key = os.getenv("GLM_API_KEY")
         if not api_key:
             raise ValueError(
@@ -127,9 +127,9 @@ def create_llm(
             )
 
         base_url = os.getenv("GLM_BASE_URL", "https://api.z.ai/api/anthropic")
-        model_name = model or os.getenv("GLM_MODEL", "glm-5")
+        model_name = model or os.getenv("GLM_MODEL", "glm-5.1")
 
-        logger.info(f"🎯 Using GLM-5 (demo): {model_name} via Anthropic-compatible API")
+        logger.info(f"🎯 Using GLM (demo): {model_name} via Anthropic-compatible API")
 
         return ChatAnthropic(
             api_key=api_key,
@@ -320,7 +320,7 @@ async def gather_context_node(state: FraudTriageState) -> FraudTriageState:
     logger.info(f"[{alert_id}] 📚 Gathering context")
 
     state["iteration_count"] = state.get("iteration_count", 0) + 1
-    state["tools_used"] = state.get("tools_used", [])
+    state["tools_used"] = state.get("tools_used") or []
 
     # Extract parameters
     customer_id = state.get("customer_id", "")
@@ -1131,4 +1131,3 @@ async def main():
 if __name__ == "__main__":
     # Run the test
     asyncio.run(main())
-

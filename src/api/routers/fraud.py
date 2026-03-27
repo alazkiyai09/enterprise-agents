@@ -1,3 +1,5 @@
+import os
+
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
@@ -21,29 +23,42 @@ def _get_agent(request: Request):
 
     agent = getattr(request.app.state, "fraud_agent", None)
     if agent is None:
-        agent = FraudTriageAgent(environment="development")
+        environment = os.getenv("ENVIRONMENT")
+        if not environment:
+            environment = "demo" if os.getenv("GLM_API_KEY") else "development"
+        agent = FraudTriageAgent(environment=environment)
         request.app.state.fraud_agent = agent
     return agent
 
 
 @router.post("/alerts")
 async def submit_alert(payload: FraudAlertRequest, request: Request) -> dict[str, object]:
-    result = _get_agent(request).run(
-        alert_id=payload.alert_id,
-        alert_type=payload.alert_type,
-        transaction_amount=payload.transaction_amount,
-        customer_id=payload.customer_id,
-    )
+    agent = _get_agent(request)
+    try:
+        result = await agent.arun(
+            alert_id=payload.alert_id,
+            alert_type=payload.alert_type,
+            transaction_amount=payload.transaction_amount,
+            customer_id=payload.customer_id,
+        )
+    except ValueError:
+        # Fallback for unknown upstream enum variants.
+        result = await agent.arun(
+            alert_id=payload.alert_id,
+            alert_type="other",
+            transaction_amount=payload.transaction_amount,
+            customer_id=payload.customer_id,
+        )
     request.app.state.fraud_alerts[payload.alert_id] = result
     return {"status": "completed", "alert_id": payload.alert_id, "result": result}
 
 
-@router.get("/alerts/{alert_id}")
-async def get_alert(alert_id: str, request: Request) -> dict[str, object]:
-    alert = request.app.state.fraud_alerts.get(alert_id)
+@router.get("/alerts/{id}")
+async def get_alert(id: str, request: Request) -> dict[str, object]:
+    alert = request.app.state.fraud_alerts.get(id)
     if alert is None:
         raise HTTPException(status_code=404, detail="Alert not found")
-    return {"alert_id": alert_id, "result": alert}
+    return {"alert_id": id, "result": alert}
 
 
 @router.get("/alerts")
@@ -54,10 +69,10 @@ async def list_alerts(request: Request) -> dict[str, object]:
     }
 
 
-@router.post("/alerts/{alert_id}/review")
-async def manual_review(alert_id: str, payload: ManualReviewRequest, request: Request) -> dict[str, object]:
-    alert = request.app.state.fraud_alerts.get(alert_id)
+@router.post("/alerts/{id}/review")
+async def manual_review(id: str, payload: ManualReviewRequest, request: Request) -> dict[str, object]:
+    alert = request.app.state.fraud_alerts.get(id)
     if alert is None:
         raise HTTPException(status_code=404, detail="Alert not found")
     alert["manual_review"] = {"reviewer": payload.reviewer, "notes": payload.notes}
-    return {"status": "recorded", "alert_id": alert_id}
+    return {"status": "recorded", "alert_id": id}
